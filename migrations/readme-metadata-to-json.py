@@ -95,12 +95,12 @@ containers = [
 def template(defId, displayName, description, categories, defType, platforms, options):
     categories = '", "'.join(categories)
     platforms = '", "'.join(platforms)
-    if defType == 'Dockerfile' or defType == 'Image':
+    if defType in ['Dockerfile', 'Image']:
         defType = 'singleContainer'
     elif defType == 'Docker Compose':
         defType = 'dockerCompose'
     else:
-        raise Exception('Unknown type: ' + defType)
+        raise Exception(f'Unknown type: {defType}')
 
     if options == '':
         options = 'lc rc'
@@ -159,8 +159,6 @@ for c in containers:
             options = str(options, 'utf-8').strip()
         except:
             options = ''
-            pass
-
         print(template(c, displayName, description,
               categories, defType, platforms, options))
 
